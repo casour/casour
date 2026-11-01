@@ -30,9 +30,9 @@
 
 <p align="center">
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/casour/casour/output/github-snake-dark.svg" />
-    <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/casour/casour/output/github-snake.svg" />
-    <img alt="contribution snake" src="https://raw.githubusercontent.com/casour/casour/output/github-snake.svg" />
+    <source media="(prefers-color-scheme: dark)" srcset="snake-dark.svg" />
+    <source media="(prefers-color-scheme: light)" srcset="snake-light.svg" />
+    <img alt="contribution snake" src="snake-dark.svg" />
   </picture>
 </p>
 
