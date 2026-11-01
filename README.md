@@ -21,7 +21,11 @@
 </p>
 
 <p align="center">
-  <img width="480" src="https://streak-stats.demolab.com?user=casour&theme=transparent&hide_border=true&locale=zh_Hans" alt="streak" />
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://streak-stats.demolab.com?user=casour&theme=github-dark&hide_border=true&locale=zh_Hans" />
+    <source media="(prefers-color-scheme: light)" srcset="https://streak-stats.demolab.com?user=casour&theme=default&hide_border=true&locale=zh_Hans" />
+    <img width="480" alt="streak" src="https://streak-stats.demolab.com?user=casour&theme=github-dark&hide_border=true&locale=zh_Hans" />
+  </picture>
 </p>
 
 <p align="center">
