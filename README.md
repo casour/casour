@@ -8,26 +8,27 @@
 
 写代码的时间现在一半自己敲，一半跟 AI 一起敲。它出活快，我负责判断哪句能留下来。
 
-最近大半时间在把 Agent 塞进日常工作流，写个能跑的 demo 不难，难的是让它天天跑还不捅娄子，所以多半在盯日志和补兜底。
+最近大半时间在把 Agent 塞进日常工作流。写个能跑的 demo 不难，难的是让它天天跑还不捅娄子，所以多半在盯日志和补兜底。
 
-**AI 应用**：把模型接进具体业务。上下文怎么给、输出怎么验、错了退回哪一步——这三件比选哪个模型更要紧。
-**Agent**：工具调用、任务拆解、多步编排。跑偏之后能不能拉回来，基本在设计时就定了。
-**Vibe Coding**：想法直接变成能跑的原型。省掉的是打字，不是判断。
+**平时做的三件事**
+
+- **AI 应用**：把模型接进具体业务。上下文怎么给、输出怎么验、错了退回哪一步，这三件比选哪个模型更要紧。
+- **Agent**：工具调用、任务拆解、多步编排。跑偏之后能不能拉回来，基本在设计的时候就定了。
+- **Vibe Coding**：想法直接变成能跑的原型。省掉的是打字，不是判断。
 
 <p align="center">
   <img src="https://go-skill-icons.vercel.app/api/icons?i=py,ts,js,nodejs,git,github,linux,docker&titles=true" alt="skills" />
 </p>
 
 <p align="center">
-  <img width="420" src="https://github-readme-stats.vercel.app/api?username=casour&theme=transparent&show_icons=true&hide_border=true&hide_title=true&include_all_commits=true&locale=cn" alt="stats" />
-  <img width="420" src="https://streak-stats.demolab.com?user=casour&theme=transparent&hide_border=true&locale=zh_Hans" alt="streak" />
+  <img width="480" src="https://streak-stats.demolab.com?user=casour&theme=transparent&hide_border=true&locale=zh_Hans" alt="streak" />
 </p>
 
 <p align="center">
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/casour/casour/output/github-snake-dark.svg" />
     <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/casour/casour/output/github-snake.svg" />
-    <img alt="snake eating my contributions" src="https://raw.githubusercontent.com/casour/casour/output/github-snake.svg" />
+    <img alt="contribution snake" src="https://raw.githubusercontent.com/casour/casour/output/github-snake.svg" />
   </picture>
 </p>
 
