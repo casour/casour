@@ -22,9 +22,9 @@
 
 <p align="center">
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://streak-stats.demolab.com?user=casour&theme=github-dark&hide_border=true&locale=zh_Hans" />
-    <source media="(prefers-color-scheme: light)" srcset="https://streak-stats.demolab.com?user=casour&theme=default&hide_border=true&locale=zh_Hans" />
-    <img width="480" alt="streak" src="https://streak-stats.demolab.com?user=casour&theme=github-dark&hide_border=true&locale=zh_Hans" />
+    <source media="(prefers-color-scheme: dark)" srcset="https://streak-stats.demolab.com?user=casour&theme=github-dark&background=00000000&hide_border=true&locale=zh_Hans&card_width=495" />
+    <source media="(prefers-color-scheme: light)" srcset="https://streak-stats.demolab.com?user=casour&theme=default&hide_border=true&locale=zh_Hans&card_width=495" />
+    <img width="495" alt="streak" src="https://streak-stats.demolab.com?user=casour&theme=github-dark&background=00000000&hide_border=true&locale=zh_Hans&card_width=495" />
   </picture>
 </p>
 
