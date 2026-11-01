@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://capsule-render.vercel.app/api?type=waving&color=0:1F6FEB,100:8B5CF6&height=220&section=header&text=Hi%20Here&fontSize=72&fontColor=ffffff&fontAlignY=40&desc=I%20AM%20Casour&descAlignY=62&descSize=22&animation=twinkling" alt="header" />
+  <img src="https://capsule-render.vercel.app/api?type=waving&color=0:1F6FEB,100:8B5CF6&height=220&section=header&text=Hi%20Here&fontSize=72&fontColor=ffffff&fontAlignY=40&desc=I%20Am%20Casour&descAlignY=62&descSize=22&animation=twinkling" alt="header" />
 </p>
 
 <p align="center">
@@ -34,5 +34,5 @@
 </p>
 
 <p align="center">
-  <img src="https://capsule-render.vercel.app/api?type=waving&color=0:8B5CF6,100:1F6FEB&height=170&section=footer&text=Hi%20Here&fontSize=40&fontColor=ffffff&fontAlignY=36&desc=I%20AM%20Casour&descAlignY=64&descSize=18&animation=twinkling" alt="footer" />
+  <img src="https://capsule-render.vercel.app/api?type=waving&color=0:8B5CF6,100:1F6FEB&height=150&section=footer&text=Keeping%20the%20agent%20honest&fontSize=30&fontColor=ffffff&fontAlignY=52&animation=twinkling" alt="footer" />
 </p>
