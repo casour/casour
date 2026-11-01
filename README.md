@@ -34,5 +34,5 @@
 </p>
 
 <p align="center">
-  <img src="https://capsule-render.vercel.app/api?type=waving&color=0:8B5CF6,100:1F6FEB&height=170&section=footer&text=Hi%20Here&fontSize=40&fontColor=ffffff&fontAlignY=66&desc=I%20AM%20Casour&descAlignY=40&descSize=18&animation=twinkling" alt="footer" />
+  <img src="https://capsule-render.vercel.app/api?type=waving&color=0:8B5CF6,100:1F6FEB&height=170&section=footer&text=Hi%20Here&fontSize=40&fontColor=ffffff&fontAlignY=36&desc=I%20AM%20Casour&descAlignY=64&descSize=18&animation=twinkling" alt="footer" />
 </p>
