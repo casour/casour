@@ -22,9 +22,9 @@
 
 <p align="center">
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://streak-stats.demolab.com?user=casour&theme=github-dark&background=00000000&hide_border=true&locale=zh_Hans&card_width=495" />
+    <source media="(prefers-color-scheme: dark)" srcset="https://streak-stats.demolab.com?user=casour&theme=github-dark&background=00000000&hide_border=true&locale=zh_Hans&card_width=495&sideLabels=c9d1d9&sideNums=e6edf3&currStreakNum=e6edf3&currStreakLabel=58a6ff&dates=8b949e&ring=1f6feb&fire=8b5cf6" />
     <source media="(prefers-color-scheme: light)" srcset="https://streak-stats.demolab.com?user=casour&theme=default&hide_border=true&locale=zh_Hans&card_width=495" />
-    <img width="495" alt="streak" src="https://streak-stats.demolab.com?user=casour&theme=github-dark&background=00000000&hide_border=true&locale=zh_Hans&card_width=495" />
+    <img width="495" alt="streak" src="https://streak-stats.demolab.com?user=casour&theme=github-dark&background=00000000&hide_border=true&locale=zh_Hans&card_width=495&sideLabels=c9d1d9&sideNums=e6edf3&currStreakNum=e6edf3&currStreakLabel=58a6ff&dates=8b949e&ring=1f6feb&fire=8b5cf6" />
   </picture>
 </p>
 
