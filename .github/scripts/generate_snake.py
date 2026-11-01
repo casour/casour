@@ -1,5 +1,6 @@
 import json
 import os
+import random
 import ssl
 import urllib.request
 
@@ -64,12 +65,14 @@ THEMES = {
         "snake": "#a855f7",
         "tail": "#6d28d9",
         "eye": "#0d1117",
+        "food": "#86efac",
     },
     "light": {
         "levels": ["#ebedf0", "#9be9a8", "#40c463", "#30a14e", "#216e39"],
         "snake": "#7c3aed",
         "tail": "#a78bfa",
         "eye": "#ffffff",
+        "food": "#15803d",
     },
 }
 
@@ -126,6 +129,54 @@ def build_anim(i):
     )
 
 
+def pick_food_spots():
+    """在回路上挑几个不等距的位置放食物，看起来才像随机刷新。
+    避开真实有贡献的格子，否则会和「吃不掉」的贡献块混在一起。"""
+    busy = set()
+    for ci, week in enumerate(weeks):
+        for day in week["contributionDays"]:
+            if day["contributionCount"] > 0:
+                busy.add((ci, day["weekday"]))
+
+    idxs = []
+    pos = random.randint(5, 9)
+    while pos < N - 3:
+        if ROUTE[pos] not in busy and (not idxs or pos - idxs[-1] >= 5):
+            idxs.append(pos)
+        pos += random.randint(4, 8)
+    return idxs
+
+
+FOOD_IDX = pick_food_spots()
+
+
+def build_food(theme_name):
+    """任一时点只有一个绿块可见：被吃掉的瞬间，下一个在前方亮起。"""
+    t = THEMES[theme_name]
+    if not FOOD_IDX:
+        return ""
+    out = []
+    for i, idx in enumerate(FOOD_IDX):
+        c, r = ROUTE[idx]
+        x = PAD + c * STEP
+        y = PAD + r * STEP
+        eaten_at = idx * STEP_TIME / DUR
+        if i == 0:
+            appears_at = FOOD_IDX[-1] * STEP_TIME / DUR
+            key_times = f"0;{eaten_at:.4f};{eaten_at:.4f};{appears_at:.4f};{appears_at:.4f};1"
+            values = "1;1;0;0;1;1"
+        else:
+            appears_at = FOOD_IDX[i - 1] * STEP_TIME / DUR
+            key_times = f"0;{appears_at:.4f};{appears_at:.4f};{eaten_at:.4f};{eaten_at:.4f};1"
+            values = "0;0;1;1;0;0"
+        out.append(
+            f'<rect x="{x}" y="{y}" width="12" height="12" rx="2" fill="{t["food"]}">'
+            f'<animate attributeName="opacity" values="{values}" keyTimes="{key_times}" '
+            f'dur="{DUR}s" repeatCount="indefinite"/></rect>'
+        )
+    return "".join(out)
+
+
 def build(theme_name):
     t = THEMES[theme_name]
     out = []
@@ -154,6 +205,9 @@ def build(theme_name):
                 f'rx="2" ry="2" fill="{fill}"/>'
             )
     out.append("</g>")
+
+    # 食物：压在网格之上、蛇之下，被蛇头经过时恰好消失
+    out.append(build_food(theme_name))
 
     # 蛇：每节一个 16x16 方块，靠 transform 逐节跟随
     def cell_xy(c, r):
