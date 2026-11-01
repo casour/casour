@@ -1,30 +1,36 @@
-# Casour
+<div align="center">
+  <img src="avatar.png" width="120" alt="avatar" />
 
-**Vibe Coding · AI 应用 · Agent 工程**
+  <h1>Casour</h1>
 
-> 让 AI 写出能跑的代码不难，难的是知道它错在哪。
+  <p><b>Vibe Coding · AI 应用 · Agent 工程</b></p>
+</div>
+
+写代码的时间现在一半自己敲，一半跟 AI 一起敲。它出活快，我负责判断哪句能留下来。
+
+## 最近在弄什么
+
+把 Agent 往日常工作流里塞。写个能跑的小 demo 不难，难的是让它天天跑还不捅娄子，所以大半时间其实花在盯日志和补兜底上。
+
+## 平时做的三件事
+
+**AI 应用**　把模型接进具体业务。上下文怎么给、输出怎么验、错了退回哪一步——这三件比选哪个模型更要紧。
+
+**Agent**　工具调用、任务拆解、多步编排。它跑偏之后能不能拉回来，基本在设计的时候就定了。
+
+**Vibe Coding**　想法直接变成能跑的原型。省掉的是打字，不是判断。
+
+## 几句实话
+
+看不懂的代码我不上。AI 写得再顺，我也得能改得动。
+
+Agent 出问题，多数不是模型不行，是边界没划清楚。
+
+提示词写得糊，换多大的模型都救不回来。
 
 ---
 
-## 我在做什么
-
-- **Vibe Coding** —— 用自然语言驱动开发，从想法到能跑的原型。省掉的是打字，不是判断。
-- **AI 应用** —— 把模型接进真实场景：上下文怎么喂、输出怎么校验、跑偏了怎么兜底。
-- **Agent 工程** —— 工具调用、任务拆解、多步编排。让 Agent 干活之前，先想清楚它会在第几步跑偏。
-- **技术分析** —— 读源码、比方案、拆选型。把一句「这个听起来不错」，拆成「哪个指标上更好、代价是什么、什么场景下我不用它」。
-
----
-
-## 我在意的事
-
-- **看不懂的代码不上线。** AI 能生成，不等于我能交付。
-- **Agent 的边界比能力更重要。** 能做什么是能力问题，该不该做是设计问题。
-- **上下文质量决定输出质量。** 提示词写不好，换模型也救不回来。
-- **先跑通，再讲透。** 没跑过的东西不写进结论。
-
----
-
-## 技术栈
+<div align="center">
 
 ![Python](https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=python&logoColor=white)
 ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=white)
@@ -33,15 +39,7 @@
 ![Anthropic](https://img.shields.io/badge/Anthropic-D4A27F?style=flat-square&logo=anthropic&logoColor=white)
 ![MCP](https://img.shields.io/badge/MCP-1F6FEB?style=flat-square&logoColor=white)
 ![LLM](https://img.shields.io/badge/LLM-8B5CF6?style=flat-square&logoColor=white)
-![Agent](https://img.shields.io/badge/Agent-0EA5E9?style=flat-square&logoColor=white)
-![Git](https://img.shields.io/badge/Git-F05032?style=flat-square&logo=git&logoColor=white)
 
----
+<sub>个人技术记录，与任何机构无关。</sub>
 
-## 正在做
-
-把 Agent 接进真实的日常工作流——不是做 demo，是让它每天真的在跑，然后盯着它在哪儿出错。
-
----
-
-<sub>Talk is cheap. Show me the agent that runs.</sub>
+</div>
