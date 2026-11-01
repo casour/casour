@@ -1,8 +1,6 @@
 import json
 import os
 import ssl
-import sys
-import urllib.error
 import urllib.request
 
 LOGIN = os.environ.get("GH_LOGIN", "casour")
@@ -56,46 +54,21 @@ PAD = 10
 W = PAD * 2 + COLS * STEP - GAP
 H = PAD * 2 + ROWS * STEP - GAP
 
-
-def build_snake(length=14):
-    """蛇头落在最后一个有贡献的格子上，蛇身向左下方蜿蜒。"""
-    active = []
-    for ci, week in enumerate(weeks):
-        for day in week["contributionDays"]:
-            if day["contributionCount"] > 0:
-                active.append((ci, day["weekday"]))
-
-    if active:
-        head_c, head_r = max(active, key=lambda p: (p[0], -p[1]))
-    else:
-        head_c, head_r = COLS - 1, 0
-
-    cells = [(head_c, head_r)]
-    for i in range(1, length):
-        c = head_c - i
-        r = min(ROWS - 1, head_r + i // 3)
-        if c < 0:
-            break
-        cells.append((c, r))
-    cells.reverse()  # 尾 -> 头
-    return cells
-
-
-SNAKE = build_snake()
+SNAKE_LEN = 12
+ROUTE_COLS = (34, COLS - 1)   # 蛇活动的矩形回路，贴着最近几周
+ROUTE_ROWS = (0, 4)
 
 THEMES = {
     "dark": {
-        "empty": "#161b22",
         "levels": ["#161b22", "#0e4429", "#006d32", "#26a641", "#39d353"],
         "snake": "#a855f7",
-        "snake_tail": "#6d28d9",
+        "tail": "#6d28d9",
         "eye": "#0d1117",
     },
     "light": {
-        "empty": "#ebedf0",
         "levels": ["#ebedf0", "#9be9a8", "#40c463", "#30a14e", "#216e39"],
         "snake": "#7c3aed",
-        "snake_tail": "#a78bfa",
+        "tail": "#a78bfa",
         "eye": "#ffffff",
     },
 }
@@ -113,6 +86,46 @@ def level(count):
     return 4
 
 
+def build_route():
+    """沿矩形边框走一圈，首尾相接，形成无缝循环。"""
+    c0, c1 = ROUTE_COLS
+    r0, r1 = ROUTE_ROWS
+    route = []
+    for c in range(c0, c1 + 1):
+        route.append((c, r0))
+    for r in range(r0 + 1, r1 + 1):
+        route.append((c1, r))
+    for c in range(c1 - 1, c0 - 1, -1):
+        route.append((c, r1))
+    for r in range(r1 - 1, r0, -1):
+        route.append((c0, r))
+    return route
+
+
+ROUTE = build_route()
+N = len(ROUTE)
+STEP_TIME = 0.42
+DUR = round(N * STEP_TIME, 2)
+
+
+def build_anim(i):
+    """第 i 节沿回路行走的 SMIL 动画：values 是相对自身基准位置的位移。"""
+    base_c, base_r = ROUTE[(-i) % N]
+    values = []
+    times = []
+    for t in range(N + 1):
+        tc, tr = ROUTE[(t - i) % N]
+        dx = (tc - base_c) * STEP
+        dy = (tr - base_r) * STEP
+        values.append(f"{dx} {dy}")
+        times.append(f"{t / N:.4f}")
+    return (
+        f'<animateTransform attributeName="transform" attributeType="XML" type="translate" '
+        f'values="{";".join(values)}" keyTimes="{";".join(times)}" '
+        f'dur="{DUR}s" repeatCount="indefinite"/>'
+    )
+
+
 def build(theme_name):
     t = THEMES[theme_name]
     out = []
@@ -120,16 +133,15 @@ def build(theme_name):
         f'<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{H}" '
         f'viewBox="0 0 {W} {H}" role="img" aria-label="contribution snake">'
     )
-    out.append("<defs>")
+    out.append("<style>rect{shape-rendering:geometricPrecision}</style>")
     out.append(
-        f'<linearGradient id="body-{theme_name}" x1="0" y1="0" x2="1" y2="0">'
-        f'<stop offset="0%" stop-color="{t["snake_tail"]}"/>'
+        f'<defs><linearGradient id="g-{theme_name}" x1="0" y1="0" x2="1" y2="0">'
+        f'<stop offset="0%" stop-color="{t["tail"]}"/>'
         f'<stop offset="100%" stop-color="{t["snake"]}"/>'
-        f"</linearGradient>"
+        f"</linearGradient></defs>"
     )
-    out.append("</defs>")
 
-    # 贡献网格
+    # 贡献网格：尺寸全部写死，不依赖任何 CSS
     out.append("<g>")
     for ci, week in enumerate(weeks):
         for day in week["contributionDays"]:
@@ -138,46 +150,50 @@ def build(theme_name):
             y = PAD + r * STEP
             fill = t["levels"][level(day["contributionCount"])]
             out.append(
-                f'<rect x="{x}" y="{y}" width="{CELL}" height="{CELL}" rx="2" ry="2" fill="{fill}"/>'
+                f'<rect x="{x}" y="{y}" width="{CELL}" height="{CELL}" '
+                f'rx="2" ry="2" fill="{fill}"/>'
             )
     out.append("</g>")
 
-    # 蛇身：16x16 连成一条，覆盖格子间隙
-    out.append('<g stroke-linejoin="round">')
-    for idx, (c, r) in enumerate(SNAKE):
-        x = PAD + c * STEP - (STEP - CELL) // 2
-        y = PAD + r * STEP - (STEP - CELL) // 2
-        is_head = idx == len(SNAKE) - 1
-        size = 16 if not is_head else 17
-        offset = -2 if not is_head else -2.5
-        fill = (
-            f'url(#body-{theme_name})' if not is_head else t["snake"]
-        )
-        out.append(
-            f'<rect x="{x + offset + 2}" y="{y + offset + 2}" width="{size}" '
-            f'height="{size}" rx="4" ry="4" fill="{fill}"/>'
-        )
-    out.append("</g>")
+    # 蛇：每节一个 16x16 方块，靠 transform 逐节跟随
+    def cell_xy(c, r):
+        return PAD + c * STEP - 2, PAD + r * STEP - 2
 
-    # 眼睛（朝右）
-    hc, hr = SNAKE[-1]
-    ex = PAD + hc * STEP + CELL / 2 + 2
-    ey = PAD + hr * STEP + CELL / 2
+    for i in range(SNAKE_LEN - 1, 0, -1):  # 先画尾巴，后画头
+        bc, br = ROUTE[(-i) % N]
+        x, y = cell_xy(bc, br)
+        ratio = i / SNAKE_LEN
+        fill = t["tail"] if ratio > 0.65 else f"url(#g-{theme_name})"
+        out.append(
+            f'<g>{build_anim(i)}'
+            f'<rect x="{x}" y="{y}" width="16" height="16" '
+            f'rx="4" ry="4" fill="{fill}"/></g>'
+        )
+
+    # 头部（含眼睛），与 i=0 同步
+    hc, hr = ROUTE[0]
+    hx, hy = cell_xy(hc, hr)
+    out.append(f"<g>{build_anim(0)}")
     out.append(
-        f'<g fill="{t["eye"]}">'
-        f'<circle cx="{ex}" cy="{ey - 3}" r="1.9"/>'
-        f'<circle cx="{ex}" cy="{ey + 3}" r="1.9"/>'
-        f"</g>"
+        f'<rect x="{hx - 0.5}" y="{hy - 0.5}" width="17" height="17" '
+        f'rx="4.5" ry="4.5" fill="{t["snake"]}"/>'
     )
+    ex = hx - 0.5 + 17 - 4.5
+    ey = hy - 0.5 + 8.5
+    out.append(
+        f'<circle cx="{ex}" cy="{ey - 3}" r="1.9" fill="{t["eye"]}"/>'
+        f'<circle cx="{ex}" cy="{ey + 3}" r="1.9" fill="{t["eye"]}"/>'
+    )
+    out.append("</g>")
 
     out.append("</svg>")
     return "\n".join(out)
 
 
 for name in ("dark", "light"):
-    path = os.path.join(HERE, f"snake-{name}.svg")
+    path = os.path.join(OUT_DIR, f"snake-{name}.svg")
     with open(path, "w", encoding="utf-8") as f:
         f.write(build(name))
     print("wrote", path, os.path.getsize(path), "bytes")
 
-print(f"grid {COLS}x{ROWS}  total contributions: {cal['totalContributions']}")
+print(f"grid {COLS}x{ROWS}  route {N} cells  {DUR}s/loop  contributions {cal['totalContributions']}")
